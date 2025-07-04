@@ -1,0 +1,41 @@
+{
+  "name": "twiinkle-next",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "watchcss": "npx tailwindcss -i src/app/globals.css -o dist/output.css --watch"
+  },
+  "dependencies": {
+    "@next/font": "^14.2.15",
+    "@supabase/supabase-js": "^2.50.0",
+    "@tiptap/extension-color": "^2.23.1",
+    "@tiptap/extension-image": "^2.23.1",
+    "@tiptap/extension-text-align": "^2.23.1",
+    "@tiptap/extension-text-style": "^2.23.1",
+    "@tiptap/extension-underline": "^2.23.1",
+    "@tiptap/react": "^2.23.1",
+    "@tiptap/starter-kit": "^2.23.1",
+    "lucide-react": "^0.525.0",
+    "next": "15.3.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-toastify": "^11.0.5",
+    "zustand": "^5.0.5"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.4",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5"
+  }
+}
