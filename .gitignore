@@ -46,3 +46,6 @@ src/app/posts
 
 # Vscode settings
 .vscode/
+
+
+/supabase
