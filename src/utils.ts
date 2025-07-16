@@ -18,7 +18,7 @@ export function formatJournalDate(dateString: string): string {
 
 export function handleAddImage(
   e: ChangeEvent<HTMLInputElement>,
-  editor: any | null
+  editor: unknown | null
 ) {
   const file = e.target.files?.[0];
   if (!file || !editor) return;

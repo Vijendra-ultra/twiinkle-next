@@ -1,7 +1,7 @@
 "use client";
 import { useStore } from "../../store";
 import type { signUpObj } from "../../types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LoadScreen from "../../miniComps/LoadScreen";
 import { supabase } from "../../SupabaseClient";
 import { toast } from "react-toastify";
@@ -11,6 +11,7 @@ import Link from "next/link";
 const redirectPasswordURL = "http://twiinkle.xyz/update-password";
 
 const LoginForm: React.FC = () => {
+  const navigate = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [forgotPasswordBtn, setForgotPasswordBtn] = useState<boolean>(false);
 
@@ -20,7 +21,7 @@ const LoginForm: React.FC = () => {
 
   const { login, email, setEmail, password, setPassword, setUser, user } =
     useStore();
-  const navigate = useRouter();
+
   const onSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -41,20 +42,34 @@ const LoginForm: React.FC = () => {
       setShowPassword(false);
     }
   };
+
   const onForgotPassword = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!email) return;
 
     e.preventDefault();
     setForgotPasswordBtnClicked(true);
     setPassword("");
-    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: redirectPasswordURL,
     });
     toast.success(`We have sent a mail to ${email} to change the password`);
-    setEmail("");
+
     setForgotPasswordBtnClicked(false);
+    if (error) {
+      toast.error("There's some error going on");
+      return;
+    }
+    setEmail("");
   };
 
+  useEffect(() => {
+    document.title = "Login to twiinkle again!";
+    if (!user || user.trim() === "" || typeof user !== "string") {
+      return;
+    } else {
+      navigate.replace("/explore");
+    }
+  }, [navigate, user]);
   return (
     <div className="min-h-screen">
       {loading && <LoadScreen />}

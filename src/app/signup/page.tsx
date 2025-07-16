@@ -5,8 +5,7 @@ import type React from "react";
 import SignUpFormInputs from "../../miniComps/SignUpFormInputs";
 import type { signUpObj } from "../../types";
 import { useEffect, useState } from "react";
-import LoadScreen from "../../miniComps/LoadScreen";
-import { toast } from "react-toastify";
+
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 const SignupForm: React.FC = () => {
@@ -32,14 +31,14 @@ const SignupForm: React.FC = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (user !== "") navigate.push("/explore");
-  //   return;
-  // }, [user]);
-
   useEffect(() => {
     document.title = "Signup to continue twiinkling";
-  }, []);
+    if (!user || user.trim() === "" || typeof user !== "string") {
+      return;
+    } else {
+      navigate.replace("/explore");
+    }
+  }, [user]);
 
   return (
     <>

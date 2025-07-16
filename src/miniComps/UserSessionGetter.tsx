@@ -13,7 +13,7 @@ const UserSessionGetter = () => {
       }
     }
     getUserSes();
-  }, []);
+  }, [setUser]);
   return null;
 };
 

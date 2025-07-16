@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { supabase } from "../../../SupabaseClient";
 import { useStore } from "../../../store";
 import JournalEntry from "./JournalEntry";
@@ -31,17 +31,7 @@ const JournalDisplayer: React.FC<JournalDisplayerProp> = ({
   const [journalMsg, setJournalMsg] = useState<string>(
     "Towards the chaos, a way's there"
   );
-  useEffect(() => {
-    if (!user || user.trim() === "" || typeof user !== "string") {
-      setJournalLoading(false);
-      // navigate.replace("login");
-      return;
-    } else {
-      getJournals(user);
-    }
-  }, [user]);
-
-  async function getJournals(user) {
+  const getJournals = useCallback(async (user: string) => {
     const { data, error } = await supabase
       .from("journal_entries")
       .select("*")
@@ -64,24 +54,34 @@ const JournalDisplayer: React.FC<JournalDisplayerProp> = ({
       console.log(error);
       toast.error("An error ocurred.");
     }
-  }
+  }, []);
 
   useEffect(() => {
-    document.title = "Your journal entries";
+    if (!user || user.trim() === "" || typeof user !== "string") {
+      setJournalLoading(false);
+      navigate.replace("/login");
+      return;
+    } else {
+      getJournals(user);
+    }
+  }, [user, getJournals, setJournalLoading]);
+
+  useEffect(() => {
+    if (profileInfoIsThere) return;
+    document.title = "Your cool journal entries";
+
     const getUserProfileInfo = async () => {
-      if (profileInfoIsThere) return;
       const result = await fetchUserProfileInfo();
 
-      console.log(result);
       if (!result) {
-        navigate.push("/update-user-info");
+        navigate.replace("/update-user-info");
         return;
       }
       setJournalMsg(`Hi ${result.data?.user_name}, it's nice to see you again`);
       setProfileInfoThere(true);
     };
     getUserProfileInfo();
-  }, []);
+  }, [profileInfoIsThere, navigate, setProfileInfoThere]);
 
   return (
     <>
