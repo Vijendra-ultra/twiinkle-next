@@ -16,20 +16,20 @@ export function formatJournalDate(dateString: string): string {
   return date.toLocaleDateString("en-US", options);
 }
 
-export function handleAddImage(
-  e: ChangeEvent<HTMLInputElement>,
-  editor: Editor | null
-) {
-  const file = e.target.files?.[0];
-  if (!file || !editor) return;
+// export function handleAddImage(
+//   e: ChangeEvent<HTMLInputElement>,
+//   editor: Editor | null
+// ) {
+//   const file = e.target.files?.[0];
+//   if (!file || !editor) return;
 
-  const filereader = new FileReader();
-  filereader.onload = () => {
-    editor
-      .chain()
-      .focus()
-      .setImage({ src: filereader.result as string })
-      .run();
-  };
-  filereader.readAsDataURL(file);
-}
+//   const filereader = new FileReader();
+//   filereader.onload = () => {
+//     editor
+//       .chain()
+//       .focus()
+//       .setImage({ src: filereader.result as string })
+//       .run();
+//   };
+//   filereader.readAsDataURL(file);
+// }
