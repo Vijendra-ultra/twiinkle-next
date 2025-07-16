@@ -44,14 +44,13 @@ const UserProfileInfo: React.FC = () => {
     const { error } = await supabase.from("user_profile_info").insert([
       {
         user_name: name.trim(),
-        age: age.trim(),
+        age: age,
         nick_name: nickname.trim(),
         user_id: user,
       },
     ]);
 
     if (error) {
-      console.log(error.message);
       toast.error(
         "An error ocurred while saving your data,Please try again later"
       );
