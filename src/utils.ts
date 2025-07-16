@@ -1,5 +1,5 @@
 import type { ChangeEvent } from "react";
-
+import { Editor } from "@tiptap/core";
 export function formatJournalDate(dateString: string): string {
   const date = new Date(dateString);
   const now = new Date();
@@ -18,7 +18,7 @@ export function formatJournalDate(dateString: string): string {
 
 export function handleAddImage(
   e: ChangeEvent<HTMLInputElement>,
-  editor: unknown | null
+  editor: Editor | null
 ) {
   const file = e.target.files?.[0];
   if (!file || !editor) return;
