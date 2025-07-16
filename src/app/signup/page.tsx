@@ -26,7 +26,7 @@ const SignupForm: React.FC = () => {
       // navigate("/signUp");
       setErrorMsg(signUpObj?.error);
     }
-    if (signUpObj.data.session === null) {
+    if (signUpObj?.data?.session === null) {
       setVerifyMsg(true);
     }
   };
