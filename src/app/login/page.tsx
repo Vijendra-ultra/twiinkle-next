@@ -26,12 +26,12 @@ const LoginForm: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     const userObj: signUpObj = await login(email, password);
-    if (userObj.error === "Invalid login credentials") {
+    if (userObj?.error === "Invalid login credentials") {
       setLoading(false);
       toast.error("Your password is wrong");
       return;
     }
-    if (userObj.data?.user?.user_metadata.email_verified) {
+    if (userObj?.data?.user?.user_metadata.email_verified) {
       const uid = userObj.data.user.id;
       setUser(uid);
       navigate.push("/explore");
