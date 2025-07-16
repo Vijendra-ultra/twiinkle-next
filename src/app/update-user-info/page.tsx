@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import LoadScreen from "../../miniComps/LoadScreen";
+
 import { supabase } from "@/SupabaseClient";
 import { useStore } from "@/store";
 import { toast } from "react-toastify";

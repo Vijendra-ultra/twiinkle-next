@@ -9,7 +9,6 @@ const UserSessionGetter = () => {
       const { data } = await supabase.auth.getUser();
       if (data.user) {
         setUser(data.user?.id);
-        console.log(user);
       }
     }
     getUserSes();

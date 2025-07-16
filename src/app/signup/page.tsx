@@ -38,7 +38,7 @@ const SignupForm: React.FC = () => {
     } else {
       navigate.replace("/explore");
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <>
