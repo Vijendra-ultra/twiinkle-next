@@ -68,7 +68,7 @@
   }
 
   .input-field {
-    @apply px-2 py-3 rounded-md input-w-sm  md:input-w;
+    @apply px-2 py-3 bg-gray-300 text-black placeholder:text-gray-600  rounded-md input-w-sm  md:input-w;
   }
 
   .journal--inputfield-h {
@@ -166,5 +166,16 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+  }
+}
+
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }

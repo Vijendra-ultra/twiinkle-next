@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const JournalInfo: React.FC = () => {
   return (
-    <div className="mt-10 md:mt-16 ">
+    <div className="mt-16 ">
       <h1 className="text-4xl lsp md:text-5xl boldonse text-center leading-snug md:leading-relaxed  text-primaryPink">
         Turn Your Chaos into Chronicles{" "}
       </h1>{" "}

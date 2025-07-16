@@ -25,49 +25,46 @@ const JournalDisplayer: React.FC<JournalDisplayerProp> = ({
     user,
   } = useStore();
 
+  const navigate = useRouter();
   const { profileInfoIsThere, setProfileInfoThere } = useUserInfoStore();
 
   const [journalMsg, setJournalMsg] = useState<string>(
     "Towards the chaos, a way's there"
   );
-  const navigate = useRouter();
   useEffect(() => {
-    console.log(user);
     if (!user || user.trim() === "" || typeof user !== "string") {
       setJournalLoading(false);
-      navigate.push("login");
+      // navigate.replace("login");
       return;
-    }
-    async function getJournals() {
-      const { data, error } = await supabase
-        .from("journal_entries")
-        .select("*")
-        .eq("user_id", user)
-        .order("date", { ascending: false })
-        .limit(12);
-
-      if (data) {
-        const JournalsList = data as journalEntry[];
-        if (JournalsList.length === 0) {
-          setJournalMsg("No journal entries to display");
-          setJournalLoading(false);
-        } else {
-          setJournalLoading(false);
-          setJournalsList(JournalsList);
-          console.log("I am running");
-        }
-      }
-      if (error) {
-        setJournalLoading(false);
-        console.log(error);
-        toast.error("An error ocurred.");
-      }
-    }
-    console.log("iran");
-    if (journalsList.length === 0) {
-      getJournals();
+    } else {
+      getJournals(user);
     }
   }, [user]);
+
+  async function getJournals(user) {
+    const { data, error } = await supabase
+      .from("journal_entries")
+      .select("*")
+      .eq("user_id", user)
+      .order("date", { ascending: false })
+      .limit(12);
+
+    if (data) {
+      const JournalsList = data as journalEntry[];
+      if (JournalsList.length === 0) {
+        setJournalMsg("No journal entries to display");
+        setJournalLoading(false);
+      } else {
+        setJournalLoading(false);
+        setJournalsList(JournalsList);
+      }
+    }
+    if (error) {
+      setJournalLoading(false);
+      console.log(error);
+      toast.error("An error ocurred.");
+    }
+  }
 
   useEffect(() => {
     document.title = "Your journal entries";
@@ -76,7 +73,7 @@ const JournalDisplayer: React.FC<JournalDisplayerProp> = ({
       const result = await fetchUserProfileInfo();
 
       console.log(result);
-      if (!result || result.error) {
+      if (!result) {
         navigate.push("/update-user-info");
         return;
       }
@@ -124,7 +121,7 @@ const JournalDisplayer: React.FC<JournalDisplayerProp> = ({
           journalsList.map((journal: journalEntry) => (
             <JournalEntry key={journal.id} journal={journal} />
           ))}
-        {!journalLoading && (
+        {!journalLoading && journalsList.length > 0 && (
           <h2 className="text-center text-2xl mt-12 mb-16 boldonse">
             It came to an end.
           </h2>

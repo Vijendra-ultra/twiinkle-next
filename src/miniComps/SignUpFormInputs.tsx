@@ -13,7 +13,7 @@ const SignUpFormInputs: React.FC = () => {
   return (
     <>
       <input
-        className="input-field"
+        className="input-field "
         type="text"
         required
         value={name}

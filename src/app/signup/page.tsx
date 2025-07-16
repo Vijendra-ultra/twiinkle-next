@@ -10,8 +10,9 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 const SignupForm: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [verifyMsg, setVerifyMsg] = useState<boolean>(false);
+  const [signUpBtnClicked, setSignUpBtnClicked] = useState<boolean>(false);
   const { email, password, signUp, errorMsg, setErrorMsg, user, setPassword } =
     useStore();
 
@@ -19,24 +20,15 @@ const SignupForm: React.FC = () => {
 
   const onSignUpSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      const signUpObj: signUpObj = await signUp(email, password);
+    setSignUpBtnClicked(true);
+    const signUpObj: signUpObj = await signUp(email, password);
 
-      if (signUpObj.error) {
-        // navigate("/signUp");
-        setErrorMsg(signUpObj?.error);
-      }
-      if (signUpObj.data?.user) {
-        toast.info(
-          "A confirmation is sent to your email, Please click to continue onboarding!",
-          { autoClose: 7000 }
-        );
-        if (!signUpObj.data?.user.user_metadata.email_verified)
-          navigate.push("/tell-us-about-yourself");
-      }
-    } finally {
-      setLoading(false);
+    if (signUpObj.error) {
+      // navigate("/signUp");
+      setErrorMsg(signUpObj?.error);
+    }
+    if (signUpObj.data.session === null) {
+      setVerifyMsg(true);
     }
   };
 
@@ -51,13 +43,12 @@ const SignupForm: React.FC = () => {
 
   return (
     <>
-      <div style={{ backgroundColor: "#ffb3c6" }} className="min-h-screen">
-        <div className="flex justify-start items-center px-6 pt-3 pr-10">
+      <div className="min-h-screen">
+        <div className={`flex justify-start items-center px-6 pt-3 pr-10 `}>
           <h2 className="inter--font  text-4xl">Twiinkle</h2>
         </div>
 
-        {loading && <LoadScreen />}
-        {!errorMsg && !loading && (
+        {!errorMsg && !verifyMsg && (
           <>
             <div className="flex justify-center items-center flex-col  mt-6">
               <p className="p md:text-2xl text-center ">
@@ -92,14 +83,18 @@ const SignupForm: React.FC = () => {
               </div>
               <div>
                 <button
+                  disabled={signUpBtnClicked}
                   type="submit"
-                  className="text-xl bg-primaryPink text-white py-3 rounded-md  input-field"
+                  style={{
+                    backgroundColor: signUpBtnClicked ? " rgb(210 108 65)" : "",
+                  }}
+                  className={`text-xl bg-primaryPink   text-white py-3 rounded-md  input-field`}
                 >
                   Signup
                 </button>
               </div>
             </form>
-            <div className="flex justify-center items-center">
+            <div className="flex mt-2 justify-center items-center">
               Already got an account,&nbsp;
               <Link href="/login" className="underline hover:text-primaryPink">
                 login
@@ -109,7 +104,7 @@ const SignupForm: React.FC = () => {
           </>
         )}
         {}
-        {errorMsg && !loading && (
+        {errorMsg && (
           <div className="flex justify-center items-center flex-col mt-12 gap-6">
             <div className="text-3xl md:text-5xl text-red-700">
               An error ocurred
@@ -128,6 +123,29 @@ const SignupForm: React.FC = () => {
                   Try again
                 </Link>
               </button>
+            </div>
+          </div>
+        )}
+        {verifyMsg && (
+          <div className="flex z-10 px-5 md:px-0  justify-center items-center flex-col mt-12 gap-6 z-1">
+            <div
+              style={{ maxWidth: "500px", minWidth: "250px" }}
+              className="  border-2 border-black px-2 md:px-6 py-5 z-10 bg-yellow-300 rounded-md"
+            >
+              <p className="p font-bold text-center">
+                We have sent you a mail to confirm your email. Go there to
+                confirm your identity.
+              </p>
+              <div className=" md:px-5 mt-3">
+                <p className="text-center text-md">
+                  This could be start of something very cool! We can't wait to
+                  have you in. Once the email address is confirmed, you can
+                  start twiinkling!
+                </p>
+                <p className="text-center mt-3">
+                  This tab is no longer required, you can close it if you want
+                </p>
+              </div>
             </div>
           </div>
         )}
