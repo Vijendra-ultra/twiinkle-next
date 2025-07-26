@@ -26,7 +26,8 @@ const JournalDisplayer: React.FC<JournalDisplayerProp> = ({
   } = useStore();
 
   const navigate = useRouter();
-  const { profileInfoIsThere, setProfileInfoThere } = useUserInfoStore();
+  const { profileInfoIsThere, setProfileInfoThere, setUserDisplayName } =
+    useUserInfoStore();
 
   const [journalMsg, setJournalMsg] = useState<string>(
     "Towards the chaos, a way's there"
@@ -34,23 +35,22 @@ const JournalDisplayer: React.FC<JournalDisplayerProp> = ({
   const getJournals = useCallback(async (user: string) => {
     const { data, error } = await supabase
       .from("journal_entries")
-      .select("*")
+      .select("journal_heading,journal_content,date")
       .eq("user_id", user)
       .order("date", { ascending: false })
       .limit(12);
 
     if (data) {
       const JournalsList = data as journalEntry[];
-      if (JournalsList.length === 0) {
-        setJournalMsg("No journal entries to display");
-        setJournalLoading(false);
-      } else {
-        setJournalLoading(false);
-        setJournalsList(JournalsList);
-      }
+
+      setJournalLoading(false);
+      setJournalsList(JournalsList);
+      return;
     }
+
     if (error) {
       setJournalLoading(false);
+      setJournalMsg("No journal entries to display");
       console.log(error);
       toast.error("An error ocurred.");
     }
@@ -59,12 +59,12 @@ const JournalDisplayer: React.FC<JournalDisplayerProp> = ({
   useEffect(() => {
     if (!user || user.trim() === "" || typeof user !== "string") {
       setJournalLoading(false);
-      navigate.replace("/login");
       return;
     } else {
+      if (journalsList.length > 0) return;
       getJournals(user);
     }
-  }, [user, getJournals, setJournalLoading]);
+  }, [user, getJournals, setJournalLoading, journalsList]);
 
   useEffect(() => {
     if (profileInfoIsThere) return;
@@ -77,8 +77,15 @@ const JournalDisplayer: React.FC<JournalDisplayerProp> = ({
         navigate.replace("/update-user-info");
         return;
       }
-      setJournalMsg(`Hi ${result.data?.user_name}, it's nice to see you again`);
+      setJournalMsg(
+        ` ${
+          result.data?.user_name !== undefined
+            ? `Hi, ${result.data?.user_name} it's nice to see you again`
+            : "Are you new here ??"
+        } `
+      );
       setProfileInfoThere(true);
+      setUserDisplayName(result.data?.user_name);
     };
     getUserProfileInfo();
   }, [profileInfoIsThere, navigate, setProfileInfoThere]);
@@ -90,7 +97,7 @@ const JournalDisplayer: React.FC<JournalDisplayerProp> = ({
           {!journalLoading && (
             <>
               {" "}
-              <h2 className=" md:mt-6 pl-3 md:mr-0 mr-1 sm:pl-0 text-xl mt-8 leading-relaxed sm:leading-loose sm:mt-8 sm:text-3xl mb-7  boldonse">
+              <h2 className=" md:mt-6 pl-3 md:mr-0 dark:text-white mr-1 sm:pl-0 text-xl mt-8 leading-relaxed sm:leading-loose sm:mt-8 sm:text-3xl mb-7  boldonse">
                 {journalMsg}
               </h2>
               <button
@@ -113,16 +120,16 @@ const JournalDisplayer: React.FC<JournalDisplayerProp> = ({
             </>
           )}
         </div>
-        {!journalLoading && journalsList.length <= 0 && (
-          <LoadScreen message="Are you just curious as us to see???" />
+        {journalLoading && (
+          <LoadScreen message="Somethings are cool when you...." />
         )}
 
         {!journalLoading &&
           journalsList.map((journal: journalEntry) => (
-            <JournalEntry key={journal.id} journal={journal} />
+            <JournalEntry key={journal.date} journal={journal} />
           ))}
         {!journalLoading && journalsList.length > 0 && (
-          <h2 className="text-center text-2xl mt-12 mb-16 boldonse">
+          <h2 className="text-center dark:text-white text-2xl mt-12 mb-16 boldonse">
             It came to an end.
           </h2>
         )}

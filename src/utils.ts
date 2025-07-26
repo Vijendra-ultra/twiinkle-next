@@ -1,5 +1,6 @@
 import type { ChangeEvent } from "react";
 import { Editor } from "@tiptap/core";
+
 export function formatJournalDate(dateString: string): string {
   const date = new Date(dateString);
   const now = new Date();

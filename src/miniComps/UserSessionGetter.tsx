@@ -4,6 +4,7 @@ import { supabase } from "@/SupabaseClient";
 import { useEffect } from "react";
 const UserSessionGetter = () => {
   const { setUser, user } = useStore();
+
   useEffect(() => {
     async function getUserSes() {
       const { data } = await supabase.auth.getUser();

@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ["class", "class"],
+  darkMode: "class",
   content: [
     "./src/app/**/*.{tsx,ts,html}",
     "./src/miniComps/**/*.{tsx,ts,html}",
@@ -18,7 +18,9 @@ module.exports = {
         footerColor: "#c77dff",
         lightGrey: "#adb5bd",
         textGrey: "#343a40",
-        darkModeWhite: "#dee2e6",
+        darkModeWhite: "#5e6a72",
+        jhColor: "#880d1e",
+        darkHoverBtnColor: "#36454F",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

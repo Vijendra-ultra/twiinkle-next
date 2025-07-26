@@ -1,7 +1,8 @@
 import { create } from "zustand";
 import { supabase } from "./SupabaseClient";
-import type { User, Session } from "@supabase/supabase-js";
+import type { Session, User } from "@supabase/supabase-js";
 import type { journalEntry } from "./types";
+import React from "react";
 
 type store = {
   //User Info
@@ -18,7 +19,7 @@ type store = {
   setPassword: (e: React.ChangeEvent<HTMLInputElement> | string) => void;
   signUp: (
     email: string,
-    password: string
+    password: string,
   ) => Promise<{
     data:
       | { user: User | null; session: Session | null }
@@ -28,7 +29,7 @@ type store = {
   }>;
   login: (
     email: string,
-    password: string
+    password: string,
   ) => Promise<{
     data:
       | { user: User | null; session: Session | null }
@@ -40,7 +41,7 @@ type store = {
   setJournalHeading: (e: React.ChangeEvent<HTMLInputElement> | string) => void;
   journalContent: string;
   setJournalContent: (
-    e: React.ChangeEvent<HTMLTextAreaElement> | string
+    e: React.ChangeEvent<HTMLTextAreaElement> | string,
   ) => void;
 
   journalsList: journalEntry[] | [];
@@ -49,6 +50,9 @@ type store = {
   setJournalLoading: (val: boolean) => void;
   errorMsg: string;
   setErrorMsg: (str: string) => void;
+
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const useStore = create<store>((set) => ({
@@ -108,4 +112,8 @@ export const useStore = create<store>((set) => ({
   setJournalLoading: (val) => set(() => ({ journalLoading: val })),
   errorMsg: "",
   setErrorMsg: (errormsg) => set({ errorMsg: errormsg }),
+
+  //ProfileRelated State
+  open: false,
+  setOpen: (val) => set({ open: val }),
 }));

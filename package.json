@@ -12,6 +12,8 @@
   "dependencies": {
     "@next/font": "^14.2.15",
     "@radix-ui/react-accordion": "^1.2.11",
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@radix-ui/react-slot": "^1.2.3",
     "@supabase/supabase-js": "^2.50.0",
     "@tiptap/extension-color": "^2.23.1",
     "@tiptap/extension-image": "^2.23.1",

@@ -1,4 +1,4 @@
-import type { User, Session } from "@supabase/supabase-js";
+import type { Session, User } from "@supabase/supabase-js";
 export type postInfo = {
   postInfo: postInfoObj;
 };
@@ -38,4 +38,8 @@ export type journalEntry = {
 
 export type journalEntryList = {
   journalList: journalEntry[];
+};
+export type user_info = {
+  user_name: string;
+  bio: string;
 };

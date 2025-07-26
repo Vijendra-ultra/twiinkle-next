@@ -1,11 +1,16 @@
 import { toast } from "react-toastify";
 import { useStore } from "../store";
 import { supabase } from "../SupabaseClient";
-import { useState, useEffect } from "react";
-
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 type onJournalSubmit = (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+type JournalTextEditorProp = {
+  setWriteJournalBtn: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-const JournalTextEditor: React.FC = () => {
+const JournalTextEditor: React.FC<JournalTextEditorProp> = ({
+  setWriteJournalBtn,
+}) => {
   const [todayDate, setTodayDate] = useState<string>("");
   const [saveBtnClicked, setSaveBtnClicked] = useState<boolean>(false);
 
@@ -14,10 +19,14 @@ const JournalTextEditor: React.FC = () => {
     setJournalHeading,
     journalContent,
     setJournalContent,
+    user,
   } = useStore();
-
+  const navigate = useRouter();
   const onJournalSubmit: onJournalSubmit = async (e) => {
     e.preventDefault();
+    if (!user || user.trim() === "" || typeof user !== "string") {
+      return;
+    }
     setSaveBtnClicked(true);
     if (journalContent.trim() === "" || journalHeading.trim() === "") {
       toast.info("We think you made a mistake making entry!");
@@ -29,8 +38,8 @@ const JournalTextEditor: React.FC = () => {
       const { error } = await supabase.from("journal_entries").insert([
         {
           date: todayDate,
-          journal_content: journalContent,
-          journal_heading: journalHeading,
+          journal_content: journalContent.trim(),
+          journal_heading: journalHeading.trim(),
         },
       ]);
       if (error) {
@@ -42,6 +51,8 @@ const JournalTextEditor: React.FC = () => {
         toast.success("Your journal entry is successfull!", {
           autoClose: 5000,
         });
+        navigate.push("/explore/journal");
+        setWriteJournalBtn(false);
       }
     } finally {
       setJournalHeading("");
@@ -52,9 +63,12 @@ const JournalTextEditor: React.FC = () => {
 
   const journalDiscard = () => {
     if (journalContent.trim() === "" || journalHeading.trim() === "") {
+      setWriteJournalBtn(false);
       return;
     }
-    toast.info("Your journal entry is discarded");
+    navigate.push("/explore/journal");
+    setWriteJournalBtn(false);
+
     setJournalContent("");
     setJournalHeading("");
   };
@@ -79,12 +93,12 @@ const JournalTextEditor: React.FC = () => {
         value={journalHeading}
         onChange={(e) => setJournalHeading(e)}
         placeholder="Heading please.."
-        className="px-2  py-2 h-auto overflow-x-hidden font-bold  text-primaryPink outline-none inter--font italic text-3xl md:text-4xl md:rounded-lg"
+        className="px-2  py-2 h-auto overflow-x-hidden font-bold dark:bg-inherit text-primaryPink outline-none inter--font italic text-3xl md:text-4xl md:rounded-lg"
       />
       <textarea
         value={journalContent}
         onChange={(e) => setJournalContent(e)}
-        className="md:journal--inputfield-h outline-none jouranal-input-sm text-black md:mt-3 placeholder:text-md md:rounded-lg pb-3 md:pb-0"
+        className="md:journal--inputfield-h outline-none jouranal-input-sm dark:bg-inherit text-black dark:text-white md:mt-3 placeholder:text-md md:rounded-lg pb-3 md:pb-0"
         placeholder="What happened today! It could be anything delighting or funny"
         spellCheck={false}
       />

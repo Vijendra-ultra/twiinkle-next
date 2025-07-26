@@ -7,8 +7,8 @@ const LoadScreen: React.FC<loadScreenProp> = ({
 }) => {
   return (
     <>
-      <div className="min-h-screen overflow-hidden px-3 flex justify-center items-center flex-col gap-5">
-        <span className="text-2xl text-center">{message}</span>
+      <div className="mt-24 overflow-hidden px-3 flex justify-center items-center flex-col gap-5">
+        <span className="text-xl md:text-2xl text-center">{message}</span>
         <span className="loader"></span>
       </div>
     </>

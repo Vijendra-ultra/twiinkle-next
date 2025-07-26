@@ -9,7 +9,7 @@ type UserInfoStore = {
 export const useUserInfoStore = create<UserInfoStore>((set) => ({
   profileInfoIsThere: false,
   setProfileInfoThere: (val) => set(() => ({ profileInfoIsThere: val })),
-  userDisplayName: "",
+  userDisplayName: "Guest",
   setUserDisplayName: (name) =>
     set(() => ({
       userDisplayName: name,

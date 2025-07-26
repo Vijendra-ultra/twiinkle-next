@@ -36,9 +36,14 @@
   .lsp {
     letter-spacing: +0.15px;
   }
-
+  .lsp-username {
+    letter-spacing: +0.5px;
+  }
   .lsp-none {
     letter-spacing: 0px;
+  }
+  .rm-lsp {
+    letter-spacing: -0.25px;
   }
   .br-50 {
     border-radius: 21px;
@@ -52,6 +57,9 @@
   }
   .p-ssm {
     font-size: 1.05rem;
+  }
+  .fw-max {
+    font-weight: 900;
   }
   .hero-btn {
     @apply px-3 py-2.5 rounded-md;
@@ -168,8 +176,6 @@
     --chart-5: 340 75% 55%;
   }
 }
-
-
 
 @layer base {
   * {
