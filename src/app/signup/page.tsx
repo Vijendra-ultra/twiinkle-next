@@ -125,11 +125,11 @@ const SignupForm: React.FC = () => {
             </div>
           </div>
         )}
-        {verifyMsg && (
+        {!verifyMsg && (
           <div className="flex z-10 px-5 md:px-0  justify-center items-center flex-col mt-12 gap-6 z-1">
             <div
               style={{ maxWidth: "500px", minWidth: "250px" }}
-              className="  border-2 border-black px-2 md:px-6 py-5 z-10 bg-yellow-300 rounded-md"
+              className="  border-2 border-black px-2 md:px-6 py-5 z-10  rounded-md"
             >
               <p className="p font-bold text-center">
                 We have sent you a mail to confirm your email. Go there to

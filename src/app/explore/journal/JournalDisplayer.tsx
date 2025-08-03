@@ -24,10 +24,8 @@ const JournalDisplayer: React.FC<JournalDisplayerProp> = ({
     setJournalLoading,
     user,
   } = useStore();
-
+  const { userDisplayName } = useUserInfoStore();
   const navigate = useRouter();
-  const { profileInfoIsThere, setProfileInfoThere, setUserDisplayName } =
-    useUserInfoStore();
 
   const [journalMsg, setJournalMsg] = useState<string>(
     "Towards the chaos, a way's there"
@@ -67,28 +65,16 @@ const JournalDisplayer: React.FC<JournalDisplayerProp> = ({
   }, [user, getJournals, setJournalLoading, journalsList]);
 
   useEffect(() => {
-    if (profileInfoIsThere) return;
     document.title = "Your cool journal entries";
 
-    const getUserProfileInfo = async () => {
-      const result = await fetchUserProfileInfo();
-
-      if (!result) {
-        navigate.replace("/update-user-info");
-        return;
-      }
-      setJournalMsg(
-        ` ${
-          result.data?.user_name !== undefined
-            ? `Hi, ${result.data?.user_name} it's nice to see you again`
-            : "Are you new here ??"
-        } `
-      );
-      setProfileInfoThere(true);
-      setUserDisplayName(result.data?.user_name);
-    };
-    getUserProfileInfo();
-  }, [profileInfoIsThere, navigate, setProfileInfoThere]);
+    setJournalMsg(
+      ` ${
+        userDisplayName !== undefined
+          ? `Hi, ${userDisplayName} it's nice to see you again`
+          : "Are you new here ??"
+      } `
+    );
+  }, [navigate, userDisplayName]);
 
   return (
     <>

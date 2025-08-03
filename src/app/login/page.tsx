@@ -7,6 +7,7 @@ import { supabase } from "../../SupabaseClient";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { LocalStorageNameGetter } from "@/utils";
 
 const redirectPasswordURL = "http://twiinkle.xyz/update-password";
 
@@ -14,7 +15,6 @@ const LoginForm: React.FC = () => {
   const navigate = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [forgotPasswordBtn, setForgotPasswordBtn] = useState<boolean>(false);
-
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [forgotPasswordBtnClicked, setForgotPasswordBtnClicked] =
     useState<boolean>(false);
@@ -24,7 +24,7 @@ const LoginForm: React.FC = () => {
 
   const onSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
+
     const userObj: signUpObj = await login(email, password);
     if (userObj?.error === "Invalid login credentials") {
       setLoading(false);
@@ -34,11 +34,13 @@ const LoginForm: React.FC = () => {
     if (userObj?.data?.user?.user_metadata.email_verified) {
       const uid = userObj.data.user.id;
       setUser(uid);
+      LocalStorageNameGetter();
       navigate.push("/explore");
     } else {
       setLoading(false);
       setPassword("");
       setEmail("");
+      toast.error(userObj.error);
       setShowPassword(false);
     }
   };
@@ -72,7 +74,6 @@ const LoginForm: React.FC = () => {
   }, [navigate, user]);
   return (
     <div className="min-h-screen">
-      {loading && <LoadScreen />}
       {!loading && (
         <>
           <div className="flex justify-start items-center px-6 pt-3 pr-10">
@@ -140,7 +141,7 @@ const LoginForm: React.FC = () => {
                   type="submit"
                   className="text-xl bg-primaryPink text-white py-3 rounded-md  input-field"
                 >
-                  Login
+                  {loading ? "Loging you in..." : "Login"}
                 </button>
               )}
             </div>

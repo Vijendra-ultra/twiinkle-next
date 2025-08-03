@@ -1,0 +1,212 @@
+/* Main css file providing styles for the editing text */
+
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+.postEditorWriting {
+  .textarea {
+    overflow-y: hidden;
+    width: 100%;
+    resize: vertical;
+  }
+  .test {
+    font-size: 7rem;
+  }
+
+  .tiptap {
+    max-width: 60rem;
+    min-height: 80vh;
+    margin: 0 auto;
+
+    @apply pt-0  md:px-0 dark:text-white outline-none;
+  }
+  .tiptap .ProseMirror {
+    font-size: 1.25rem;
+    min-height: 100vh; /* changed from 80vh */
+    max-width: 60rem;
+    margin: 0 auto;
+    margin-right: 12px;
+
+    @apply pt-0 px-5 md:px-0 outline-none;
+  }
+
+  .heading-holder {
+    max-width: 60rem;
+  }
+  .heading-style {
+    font-family: "Inter", "Open Sans";
+    font-weight: 900;
+    letter-spacing: -0.25px;
+
+    margin: 0 auto;
+
+    @apply md:text-9xl text-4xl   italic leading-none dark:text-white;
+  }
+  .tiptap .ProseMirror {
+    h1 {
+      font-family: "Inter", "Poppins";
+      font-weight: 600;
+      letter-spacing: -0.25px;
+      @apply text-black md:text-6xl mb-8 leading-none dark:text-white;
+    }
+
+    h2 {
+      font-family: "Inter", serif;
+
+      @apply text-3xl md:text-5xl mb-2 mt-4 md:mb-5 dark:text-white;
+    }
+    h3 {
+      font-family: "Inter", serif;
+      @apply text-3xl mb-3 mt-4  dark:text-white;
+    }
+    p {
+      font-family: "Truculenta", "Poppins", serif;
+      font-size: 1.67rem;
+      line-height: 1.45;
+      margin-bottom: 1.6rem;
+      @apply dark:text-darkModeWhite;
+    }
+    code {
+      @apply bg-gray-100 text-orange-500 font-mono text-lg px-1 rounded;
+    }
+    strong {
+      @apply dark:text-white;
+      font-weight: 900 !important;
+    }
+    img {
+      border-radius: 5px;
+      @apply mt-3 mb-8;
+    }
+  }
+
+  .tiptap {
+    width: 50rem;
+    margin: 0 auto;
+  }
+  .active {
+    @apply bg-lightPink text-black border-2 border-primaryPink;
+  }
+
+  @media screen and (max-width: 443px) {
+    .tiptap {
+      width: auto;
+    }
+    .tiptap .ProseMirror {
+      @apply px-4 mr-0;
+    }
+    .tiptap .ProseMirror {
+      h1 {
+        @apply text-3xl mb-6;
+        font-family: "Boldonse", serif;
+        font-weight: 500 !important;
+        line-height: 1.6;
+        font-style: normal !important;
+        letter-spacing: 0.2px;
+      }
+      h2 {
+        @apply mb-5;
+      }
+      h3 {
+        @apply mb-5;
+      }
+      p {
+        font-size: 1.35rem;
+
+        line-height: 1.5;
+        text-indent: 2px;
+      }
+    }
+  }
+}
+/* //styles for post displaying */
+.postDisplayCont {
+  .heading-style {
+    font-family: "Inter", "Open Sans";
+
+    letter-spacing: -0.25px;
+
+    margin: 0 auto;
+
+    @apply md:text-8xl text-4xl   italic leading-none dark:text-white;
+  }
+  h1 {
+    font-family: "Inter", "Poppins";
+    font-weight: 600;
+    letter-spacing: -0.25px;
+    @apply text-black md:text-6xl mb-8 leading-none dark:text-white;
+  }
+
+  h2 {
+    font-family: "Inter", serif;
+
+    @apply text-3xl md:text-5xl mb-2 mt-4 md:mb-5 dark:text-white;
+  }
+  h3 {
+    font-family: "Inter", serif;
+    @apply text-3xl mb-3 mt-4  dark:text-white;
+  }
+  p {
+    font-family: "Poppins", serif;
+    font-size: 1.25rem;
+    line-height: 1.65;
+
+    @apply mb-4 md:mb-5 dark:text-gray-300;
+  }
+  code {
+    @apply bg-gray-100 text-orange-500 font-mono text-lg px-1 rounded;
+  }
+  strong {
+    @apply dark:text-white;
+    font-weight: 900 !important;
+  }
+  img {
+    border-radius: 5px;
+    @apply mt-3 mb-8;
+  }
+
+  @media screen and (max-width: 443px) {
+    h1 {
+      @apply text-2xl mb-6;
+      font-family: "Boldonse", serif;
+      font-weight: 500 !important;
+      line-height: 1.95;
+      font-style: normal !important;
+      letter-spacing: 0.2px;
+    }
+    h2 {
+      @apply mb-5;
+    }
+    h3 {
+      @apply mb-5;
+    }
+    p {
+      font-size: 1.1rem;
+
+      line-height: 1.65;
+      letter-spacing: -0.15px;
+    }
+  }
+}
+/* Arrays
+
+int[] nums={1,2,3,4,5}
+
+The above declaration is how we define arrays in java. If array needs elements insert after the declaration you could define the length like int[] nums=new int[length]. Moving between multiple elements of array is time consuming. 
+
+Time complexity
+
+In linear search, the elements are sorted in an array. We go one by one. What if the elements are not there in the array, we might search the whole array without finding the target element.
+
+In binary search, the array is sorted and we divide the array into 2 pieces in the middle. We divide the array till we find the target element. The piece will be divided iteratively. The idea is simple we divide  the array again and again to find the element. Binary search is more efficient (at 34:00).
+
+Skipped Big O notation thing.
+
+Bubble Sort
+
+It's not efficient. In this we take 2 elements. We check which element is bigger than that. We shift the bigger one to the right.  We iterate. If the second element we are comparing is bigger means we skip it and go to the next iteration. We iterate over and over. Time complexity is O(n^2). We use 2 loops. 
+
+We run 2 loops one to iterate again and again. We need to make  j<sizeOfArr-1 to get rid of IndexOutOfBounds error. We use temp var to swap the numbers. 
+
+Selection Sort
+
+In selection sort we find the minimum and maximum value of the entire array. We keep it in a sorted like position. We check again. We make the first elem as the MAX_VAL and compare that with other elements. We move the MAX_VAL to the last position. 
+
+We do the same again and we find the MAX_VAL again and keep it in the position next to the last position.We dont go and iterate in the already sorted positions. TC is O(n^2). */

@@ -41,8 +41,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Ignore it for now
-src/app/posts
+
 
 # Vscode settings
 .vscode/

@@ -1,5 +1,6 @@
 import type { ChangeEvent } from "react";
 import { Editor } from "@tiptap/core";
+import { fetchUserProfileInfo } from "./userDataRelatedFunc";
 
 export function formatJournalDate(dateString: string): string {
   const date = new Date(dateString);
@@ -34,3 +35,18 @@ export function formatJournalDate(dateString: string): string {
 //   };
 //   filereader.readAsDataURL(file);
 // }
+
+export const LocalStorageNameGetter = async () => {
+  let Name: string | null = localStorage.getItem("Name");
+  if (!Name) {
+    const result = await fetchUserProfileInfo();
+    if (!result || !result.data?.user_name) {
+      return "NoNameFound";
+    }
+    Name = result.data.user_name;
+    localStorage.setItem("Name", Name!);
+    return Name;
+  }
+
+  return Name;
+};

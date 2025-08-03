@@ -1,32 +1,18 @@
 .loader {
-  width: calc(100px - 14px);
-  height: 50px;
-  position: relative;
-  animation: flippx 1s infinite linear;
-}
-.loader:before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 20px;
-  height: 20px;
+  width: 48px;
+  height: 48px;
+  border: 5px dotted #fff;
   border-radius: 50%;
-  background: #ff3d00;
-  transform-origin: -14px 50%;
-  animation: spin 0.5s infinite linear;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 2s linear infinite;
 }
-@keyframes flippx {
-  0%,
-  49% {
-    transform: scaleX(1);
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
   }
-  50%,
-  100% {
-    transform: scaleX(-1);
-  }
-}
-@keyframes spin {
   100% {
     transform: rotate(360deg);
   }

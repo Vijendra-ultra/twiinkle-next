@@ -1,5 +1,8 @@
 import UserSessionGetter from "@/miniComps/UserSessionGetter";
 import "./globals.css";
+import ProfileWindowHolder from "@/miniComps/ProfileWindowHolder";
+import ThemeGetter from "@/miniComps/ThemeGetter";
+import ToastProvider from "@/miniComps/ToastProider";
 
 export default function RootLayout({
   children,
@@ -7,7 +10,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link
           rel="apple-touch-icon"
@@ -27,9 +30,29 @@ export default function RootLayout({
           href="/favicon-16x16.png"
         /> */}
         {/* <link rel="manifest" href="/site.webmanifest" /> */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+           (function() {
+        try {
+          const mode = localStorage.getItem("mode");
+          if (mode === "dark") {
+            document.documentElement.classList.add("dark");
+          }
+        } catch(e) {}
+      })();
+    `,
+          }}
+        ></script>
       </head>
-      <UserSessionGetter />
-      <body>{children}</body>
+
+      <body>
+        <UserSessionGetter />
+        <ProfileWindowHolder />
+        <ThemeGetter />
+        <ToastProvider />
+        {children}
+      </body>
     </html>
   );
 }

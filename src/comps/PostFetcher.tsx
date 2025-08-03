@@ -1,48 +1,43 @@
+import { useEffect, useState } from "react";
 import PostPreviewDisplayer from "./PostPreviewDisplayer";
+import { supabase } from "@/SupabaseClient";
+import { PostRelatedStore } from "@/app/posts/postStore";
+import LoadScreen from "@/miniComps/LoadScreen";
 
-const PostFetcher = ({
-  onPreviewClick,
-}: {
-  onPreviewClick: (pID: string) => void;
-}) => {
+const PostFetcher = () => {
+  const { posts, setPosts } = PostRelatedStore();
+  const [loading, setLoading] = useState<boolean>(false);
+  useEffect(() => {
+    if (posts.length > 0) return;
+    async function postsGetter() {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("public_posts")
+        .select("*")
+        .limit(12);
+      if (data) {
+        setPosts(data);
+        setLoading(false);
+      }
+      if (error) {
+        console.log(error.message);
+      }
+    }
+    postsGetter();
+  }, [posts]);
+  useEffect(() => {
+    document.title = "Some really cool posts to see.";
+  }, []);
   return (
-    <div className="mt-4">
-      <PostPreviewDisplayer
-        onPreviewClick={onPreviewClick}
-        pID="345"
-        postTitle="How much chaos is too much chaos"
-        postPTxt="Whether you've been through things you hated or thorught something all it takes maybe its all..."
-      />
-      <PostPreviewDisplayer
-        onPreviewClick={onPreviewClick}
-        pID="345"
-        postTitle="Why paramathma is a classic and why you should watch it"
-        postPTxt="I have seen lot of films and some films really make me watch it again and again and one of them is this..."
-      />
-      <PostPreviewDisplayer
-        onPreviewClick={onPreviewClick}
-        pID="345"
-        postTitle="Nothing fancy!"
-        postPTxt="So many days of hardwork to prove one thing and here I am "
-      />
-      <PostPreviewDisplayer
-        onPreviewClick={onPreviewClick}
-        pID="345"
-        postTitle="Nothing fancy!"
-        postPTxt="So many days of hardwork to prove one thing and here I am "
-      />
-      <PostPreviewDisplayer
-        onPreviewClick={onPreviewClick}
-        pID="345"
-        postTitle="Nothing fancy!"
-        postPTxt="So many days of hardwork to prove one thing and here I am "
-      />
-      <PostPreviewDisplayer
-        onPreviewClick={onPreviewClick}
-        pID="345"
-        postTitle="Nothing fancy!"
-        postPTxt="So many days of hardwork to prove one thing and here I am "
-      />
+    <div>
+      {loading && <LoadScreen message="Please wait a minute.... " />}
+      {posts.map((postData) => (
+        <PostPreviewDisplayer
+          key={postData.id}
+          pID={postData.id}
+          postTitle={postData.title}
+        />
+      ))}
     </div>
   );
 };

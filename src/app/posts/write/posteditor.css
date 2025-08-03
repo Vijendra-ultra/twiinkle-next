@@ -1,0 +1,188 @@
+/* Main css file providing styles for the editing text */
+
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+.postEditorWriting {
+  .textarea {
+    overflow-y: hidden;
+    width: 100%;
+    resize: vertical;
+    font-weight: 800;
+  }
+  .test {
+    font-size: 7rem;
+  }
+
+  .tiptap {
+    max-width: 60rem;
+    min-height: 80vh;
+    margin: 0 auto;
+
+    @apply pt-0  md:px-0 dark:text-white outline-none;
+  }
+  .tiptap .ProseMirror {
+    font-size: 1.25rem;
+    min-height: 100vh; /* changed from 80vh */
+    max-width: 60rem;
+    margin: 0 auto;
+    margin-right: 12px;
+
+    @apply pt-0 px-5 md:px-0 outline-none;
+  }
+
+  .heading-holder {
+    max-width: 60rem;
+  }
+  .heading-style {
+    font-family: "Inter", "Open Sans";
+    font-weight: 900;
+    letter-spacing: -0.25px;
+
+    margin: 0 auto;
+
+    @apply md:text-7xl text-4xl   italic leading-none dark:text-white;
+  }
+  .tiptap .ProseMirror {
+    h1 {
+      font-family: "Inter", "Poppins";
+      font-weight: 600;
+      letter-spacing: -0.25px;
+      @apply text-black md:text-6xl mb-8 leading-none dark:text-white;
+    }
+
+    h2 {
+      font-family: "Inter", serif;
+
+      @apply text-3xl md:text-5xl mb-2 mt-4 md:mb-5 dark:text-white;
+    }
+    h3 {
+      font-family: "Inter", serif;
+      @apply text-3xl mb-3 mt-4  dark:text-white;
+    }
+    p {
+      font-family: "Truculenta", "Poppins", serif;
+      font-size: 1.6rem;
+      line-height: 1.45;
+      margin-bottom: 1.6rem;
+      @apply dark:text-white;
+    }
+    code {
+      @apply bg-gray-100 text-orange-500 font-mono text-lg px-1 rounded;
+    }
+    strong {
+      @apply dark:text-white;
+      font-weight: 900 !important;
+    }
+    img {
+      border-radius: 5px;
+      @apply mt-3 mb-8;
+    }
+  }
+
+  .tiptap {
+    width: 50rem;
+    margin: 0 auto;
+  }
+  .active {
+    @apply bg-lightPink text-black border-2 border-primaryPink;
+  }
+
+  @media screen and (max-width: 443px) {
+    .tiptap {
+      width: auto;
+    }
+    .tiptap .ProseMirror {
+      @apply px-4 mr-0;
+    }
+    .tiptap .ProseMirror {
+      h1 {
+        @apply text-3xl mb-6;
+        font-family: "Boldonse", serif;
+        font-weight: 500 !important;
+        line-height: 1.6;
+        font-style: normal !important;
+        letter-spacing: 0.2px;
+      }
+      h2 {
+        @apply mb-5;
+      }
+      h3 {
+        @apply mb-5;
+      }
+      p {
+        font-size: 1.35rem;
+
+        line-height: 1.5;
+        text-indent: 2px;
+      }
+    }
+  }
+}
+/* //styles for post displaying */
+.postDisplayCont {
+  .heading-style {
+    font-family: "Inter", "Open Sans";
+
+    letter-spacing: -0.25px;
+
+    margin: 0 auto;
+
+    @apply md:text-8xl text-4xl   italic leading-none dark:text-white;
+  }
+  h1 {
+    font-family: "Inter", "Poppins";
+    font-weight: 600;
+    letter-spacing: -0.25px;
+    @apply text-black md:text-6xl mb-8 leading-none dark:text-white;
+  }
+
+  h2 {
+    font-family: "Inter", serif;
+
+    @apply text-3xl md:text-5xl mb-2 mt-4 md:mb-5 dark:text-white;
+  }
+  h3 {
+    font-family: "Inter", serif;
+    @apply text-3xl mb-3 mt-4  dark:text-white;
+  }
+  p {
+    font-family: "Truculenta", "Poppins", serif;
+    font-size: 1.5rem;
+    line-height: 1.45;
+    margin-bottom: 1.6rem;
+    @apply dark:text-gray-300;
+  }
+  code {
+    @apply bg-gray-100 text-orange-500 font-mono text-lg px-1 rounded;
+  }
+  strong {
+    @apply dark:text-white;
+    font-weight: 900 !important;
+  }
+  img {
+    border-radius: 5px;
+    @apply mt-3 mb-8;
+  }
+
+  @media screen and (max-width: 443px) {
+    h1 {
+      @apply text-3xl mb-6;
+      font-family: "Boldonse", serif;
+      font-weight: 500 !important;
+      line-height: 1.6;
+      font-style: normal !important;
+      letter-spacing: 0.2px;
+    }
+    h2 {
+      @apply mb-5;
+    }
+    h3 {
+      @apply mb-5;
+    }
+    p {
+      /* font-size: 1.35rem; */
+
+      line-height: 1.5;
+      text-indent: 2px;
+    }
+  }
+}

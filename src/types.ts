@@ -35,6 +35,12 @@ export type journalEntry = {
   journal_heading: string;
   user_id: string;
 };
+export type posts = {
+  id: string;
+  bl_cont: string;
+  title: string;
+  created_at: string;
+};
 
 export type journalEntryList = {
   journalList: journalEntry[];

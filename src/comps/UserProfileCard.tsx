@@ -20,7 +20,7 @@ const UserProfileCard: React.FC<userProfileCard> = ({ fetchedInfo, u_id }) => {
         </div>
       </div>
       <div className="mt-6">
-        <p className=" text-md md:text-xl text-gray-300">{u_id}</p>
+        <p className=" text-md md:text-xl dark:text-gray-300">{u_id}</p>
         <h4 className="md:text-xl inter--font mt-3 font-semibold">
           {fetchedInfo.bio}
         </h4>
